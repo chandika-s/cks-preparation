@@ -1,0 +1,22 @@
+---
+  apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: allow-web-egress
+    namespace: secure-app
+  spec:
+    podSelector: 
+      matchLabels:
+        run: web
+    policyTypes:
+    - Ingress
+    ingress:
+      - from:
+        - podSelector:
+            matchLabels:
+              run: client
+        ports:
+        - protocol: TCP
+          port: 80
+
+  

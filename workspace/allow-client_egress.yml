@@ -1,0 +1,32 @@
+---
+  apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: allow-client-egress
+    namespace: secure-app
+  spec:
+    podSelector: 
+      matchLabels:
+        run: client
+    policyTypes:
+    - Egress
+    egress:
+      - to:
+          - podSelector:
+              matchLabels:
+                run: web
+        ports:
+        - protocol: TCP
+          port: 80
+      - to:
+          - namespaceSelector:
+              matchLabels:
+                kubernetes.io/metadata.name: kube-system
+            podSelector:
+              matchLabels:
+                k8s-app: kube-dns
+        ports:
+          - protocol: TCP
+            port: 53
+          - protocol: UDP
+            port: 53
