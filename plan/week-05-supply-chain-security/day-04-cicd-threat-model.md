@@ -19,6 +19,11 @@ Supply chain security spans: **source** (signed commits, protected branches) →
 ## Prerequisites
 None (cluster access needed only for the optional digest exercise in step 4).
 
+## Exam-style question
+Context: a pipeline flows `GitHub repo -> shared CI runner -> Docker Hub/private registry -> Kubernetes cluster`, and a compromised runner is able to push a tampered image under the existing tag `myapp:1.4.2`. Task: document the pipeline's risks in `workspace/week-05/day-04/threat-model.md` with one attack and one mitigation per stage, and name two independent cluster-side controls that would block the tampered image. Requirements: for the cluster exercise, pod `dg` (`docker.io/library/nginx:1.27`) in `default` must be re-deployed as pod `dg-pinned` using `dg-pinned.yaml` that references the image by digest rather than tag.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create `workspace/week-05/day-04/threat-model.md`: a one-page bulleted threat model for a hypothetical pipeline `GitHub repo -> shared CI runner -> Docker Hub/private registry -> Kubernetes cluster`. For each of the four stages (source, build, artifact storage, deploy) list exactly one concrete attack and one concrete mitigation.
 2. For the scenario "a compromised CI runner pushes a tampered image under the tag `myapp:1.4.2`", state (a) what an unprotected cluster does, and (b) two independent controls that would stop it at the cluster.

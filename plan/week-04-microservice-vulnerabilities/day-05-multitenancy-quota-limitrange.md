@@ -25,6 +25,11 @@ Behaviour to know:
 ## Prerequisites
 None.
 
+## Exam-style question
+Context: two tenants need isolated namespaces, `tenant-a` and `tenant-b`. Task: constrain `tenant-a` with ResourceQuota `tenant-a-quota` (3 pods, requests 1 CPU / 1Gi, limits 2 CPU / 2Gi) and LimitRange `tenant-a-limits` (container defaults 200m/128Mi limits and 100m/64Mi requests, maximum 500m/512Mi per container). Requirements: a Deployment `web` (`nginx:1.27`, no explicit resources, 5 replicas) in `tenant-a` must be capped by the quota with defaults injected from the LimitRange, a Pod `hog` requesting `limits.cpu: 1` must be rejected, and `tenant-b` must remain unconstrained.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create namespaces `tenant-a` and `tenant-b`.
 2. In `tenant-a` create `ResourceQuota` `tenant-a-quota` with hard limits:

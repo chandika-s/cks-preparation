@@ -21,6 +21,11 @@ Immutable containers cannot be modified after start, limiting what an attacker c
 ## Prerequisites
 none.
 
+## Exam-style question
+Context: namespace `immutable` needs a Deployment `web` (1 replica, image `nginxinc/nginx-unprivileged:1.27-alpine`, port 8080) that currently would run with no hardening. Task: make container `web` immutable at runtime while keeping it serving HTTP on port 8080. Requirements: root filesystem read-only with `/tmp` as the only writable path; privilege escalation disallowed; all Linux capabilities dropped unless proven necessary; pod runs as non-root with the `RuntimeDefault` seccomp profile; the rollout must complete successfully, writes outside `/tmp` must fail, and the effective capability set must be empty.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create namespace `immutable` and Deployment `web` (1 replica) with image `nginxinc/nginx-unprivileged:1.27-alpine`, container port 8080, no securityContext. Wait for it to be ready.
 2. Edit the Deployment so the container `web` has `readOnlyRootFilesystem: true`. Observe the rollout: find out why the new pod fails (logs) and record the path.

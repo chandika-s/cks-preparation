@@ -20,6 +20,11 @@ Smaller base images (distroless, `scratch`, alpine) ship fewer packages, so fewe
 ## Prerequisites
 None. Needs `docker`, `trivy`, and `kind` on the host. Work in `workspace/week-05/day-01/` (create it).
 
+## Exam-style question
+Context: the `cks` kind cluster is running and `workspace/week-05/day-01/` contains a Go HTTP server `main.go` listening on 8080, along with an Ubuntu-based `Dockerfile.fat` that builds it. Task: produce a minimal runtime image `hello-go:slim` that contains only the compiled binary, runs as a non-root user and has no shell, then run it as pod `hello` in namespace `default`. Requirements: record the image sizes of the fat and slim variants, and the HIGH/CRITICAL Trivy counts for both, in `workspace/week-05/day-01/results.txt`. Do not modify `main.go`.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create `workspace/week-05/day-01/main.go`:
    ```go

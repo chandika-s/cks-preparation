@@ -26,6 +26,11 @@ Choosing:
 ## Prerequisites
 Docker, `kind`, `helm` and `cilium` CLI optional (for the optional part). Free disk/RAM for a second cluster. The written answer does not need any tools.
 
+## Exam-style question
+Context: cluster `kind-cks` is given and must not be modified. Task: using only `kubectl`, determine which CNI it runs and whether it encrypts Pod-to-Pod traffic by default. Then write `~/pod-encryption.md` (one paragraph, under 200 words) comparing CNI-level encryption with service-mesh mTLS, including when to pick each, the Istio resource that enforces strict mTLS, and two limitations of each. Requirements: optionally, a separate kind cluster `cks-cilium` with WireGuard encryption may be built, but the context must be switched back to `kind-cks` afterwards.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Part A (optional, if time allows; leave `kind-cks` untouched):
 1. Create a kind cluster `cks-cilium` (1 control-plane, 1 worker) with the default CNI disabled.

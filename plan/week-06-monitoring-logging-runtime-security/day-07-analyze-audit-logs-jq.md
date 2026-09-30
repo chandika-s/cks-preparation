@@ -21,6 +21,11 @@ jq basics: `select(cond)`, `-c` compact output, `-r` raw strings, `.a.b`, `?` to
 ## Prerequisites
 Day 6: audit logging enabled (policy + `--audit-log-path=/var/log/kubernetes/audit/audit.log`). `jq` installed on the host.
 
+## Exam-style question
+Context: audit logging is enabled on the cluster, and namespace `audit-lab` holds pods `p1` and `p2`, Secret `s1`, Role `pod-manager` bound to user `bob`, and user `alice` with no permissions. Task: generate activity as `alice`, `bob` and the admin, then copy the audit log to `workspace/week-06/audit.log` and use `jq` to answer questions about it. Requirements: save each filter and its result count in `workspace/week-06/day-07-filters.txt` for: all deletes in `audit-lab`, all requests involving `alice`, all `403` responses summarized by user, verb and resource, all pod `exec` events, and secret access by anyone other than `kubernetes-admin` or `system:*`; state which identity tried to read secrets cluster-wide and whether it succeeded.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create namespace `audit-lab` with pods `p1`, `p2` (image `nginx`) and Secret `s1`.
 2. Create Role `pod-manager` in `audit-lab` (verbs `get,list,delete` on `pods`) and RoleBinding `bob-pod-manager` binding it to user `bob`. Give user `alice` no permissions.

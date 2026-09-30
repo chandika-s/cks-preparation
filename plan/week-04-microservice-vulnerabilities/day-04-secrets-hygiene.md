@@ -17,6 +17,11 @@
 ## Prerequisites
 None. (If Day 3 encryption is enabled, that is fine.)
 
+## Exam-style question
+Context: namespace `secrets-lab` contains Secret `db-creds` (keys `username` and `password`) consumed by Deployment `app` through the environment variable `DB_PASSWORD`. Task: reconfigure `app` so the password is no longer exposed as an environment variable and is instead available to the container as a read-only file at `/etc/db-creds/password` with mode `0400`. Requirements: the Secret itself must not change, the pod specification must not contain the password value in any form, and the Deployment must remain at 1 running replica.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create namespace `secrets-lab`. Create Secret `db-creds` there with `username=appuser` and `password=S3cr3tPassw0rd`.
 2. Create Deployment `app` (1 replica, image `busybox:1.36`, command `sleep 3600`) in `secrets-lab` that injects `password` into env var `DB_PASSWORD` using `secretKeyRef`. Verify from inside the container that `DB_PASSWORD` is visible in the environment.

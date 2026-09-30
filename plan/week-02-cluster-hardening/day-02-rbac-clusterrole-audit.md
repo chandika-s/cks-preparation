@@ -17,6 +17,11 @@
 ## Prerequisites
 None. (`jq` installed on the host.)
 
+## Exam-style question
+Context: the kind-cks cluster is running with its default RBAC bindings. Task: audit every ClusterRoleBinding and RoleBinding that grants `cluster-admin` and identify any subject that should not have it. Then create ServiceAccount `node-viewer` in namespace `default` with read-only access (get, list) to nodes and persistentvolumes through ClusterRole `node-pv-viewer` and ClusterRoleBinding `node-viewer-binding`. Requirements: do not modify or delete any existing binding; the ServiceAccount must not be able to delete nodes, list pods in `kube-system`, or read secrets in any namespace.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. List every ClusterRoleBinding in the cluster whose `roleRef.name` is `cluster-admin`, printing the binding name and its subjects (kind, name, namespace). Also list any RoleBindings in any namespace that reference `cluster-admin`. Record which subjects are expected (built-in) and which would be a finding.
 2. Create a ClusterRole `node-pv-viewer` allowing only `get` and `list` on `nodes` and `persistentvolumes`.

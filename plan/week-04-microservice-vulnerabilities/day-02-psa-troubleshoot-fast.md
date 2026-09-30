@@ -24,6 +24,11 @@ Common restricted-level violations and fixes:
 ## Prerequisites
 None (Day 1 concepts).
 
+## Exam-style question
+Context: namespace `psa-fast` enforces `restricted`, and the Deployment `logger` from `~/psa-fast/broken.yaml` has no pods because the ReplicaSet cannot create them. Task: determine why no pods exist, then deliver a corrected manifest `~/psa-fast/fixed.yaml` so both replicas of `logger` run and the container still writes `/host-logs/out.log`. Requirements: do not relax the namespace's PSA labels, do not use hostPath, the container must not run as root or privileged, and the complete fix must be done within 15 minutes.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Time limit: 15 minutes.
 

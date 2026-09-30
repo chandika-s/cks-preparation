@@ -16,6 +16,11 @@ Quick recall:
 ## Prerequisites
 Days 1–7 completed. Falco installed; audit logging enabled (Day 6). Start each item from a clean namespace.
 
+## Exam-style question
+Context: a timed mixed review (about 75 minutes, no notes) across Falco, incident response, runtime immutability, audit policy and audit log analysis, using namespaces `quiz1`, `quiz2`, `quiz3` and the Day 7 file `workspace/week-06/audit.log`. Task: (1) alert at `CRITICAL` when `curl` or `wget` runs in pod `app` in `quiz1`; (2) contain compromised Deployment `api` in `quiz2`, collect evidence, remove its excess RBAC and replace the pod; (3) harden Deployment `svc` in `quiz3` to be immutable with only `/tmp` writable; (4) replace the audit policy with `/etc/kubernetes/audit/policy2.yaml` and prove a ConfigMap create is logged at `Request`; (5) write `jq` filters over the audit log. Requirements: keep earlier Falco rule files and do not break the apiserver.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Use a timer. No notes on the first attempt.
 1. (15 min) A namespace `quiz1` has a pod `app` (image `nginx`). Write a custom Falco rule from scratch that alerts at `CRITICAL` whenever a process named `curl` or `wget` runs inside a container in `quiz1`, output including pod, user and command line. Deliver it via the Helm release, keeping earlier rule files, and trigger it.

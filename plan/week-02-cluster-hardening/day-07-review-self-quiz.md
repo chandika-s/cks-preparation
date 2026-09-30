@@ -12,6 +12,11 @@ Review only after attempting: RBAC scoping (Role vs ClusterRole, bindings, imper
 ## Prerequisites
 None. Use scratch namespace `quiz-rbac` (create it as part of item 1).
 
+## Exam-style question
+Context: the kind-cks cluster is running and namespace `quiz-rbac` does not exist. Task: create namespace `quiz-rbac` and ServiceAccount `viewer` with read-only access (get, list, watch) to pods in that namespace only, and prove allowed and denied actions. Also list every `cluster-admin` ClusterRoleBinding with its subjects and state which are expected. Requirements: no Helm or docs lookups; item 1 within 8 minutes and item 2 within 5 minutes; answer the written items in `workspace/week02-quiz.md`.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Do items 1–2 as timed hands-on tasks; answer 3–5 in writing (put them in `workspace/week02-quiz.md`) from memory.
 1. (8 min) Create namespace `quiz-rbac`, ServiceAccount `viewer`, a Role and RoleBinding scoping `viewer` to read-only (`get,list,watch`) access to `pods` in that namespace. Prove allowed and denied actions with `kubectl auth can-i`.

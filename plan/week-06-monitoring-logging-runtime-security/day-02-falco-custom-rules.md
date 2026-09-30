@@ -20,6 +20,11 @@ Custom rules are YAML list items. Required rule fields: `rule` (name), `desc`, `
 ## Prerequisites
 Day 1: Falco installed in namespace `falco` (release `falco`, `modern_ebpf`, `tty=true`).
 
+## Exam-style question
+Context: Falco is running as Helm release `falco` in namespace `falco`, and namespace `rules-lab` contains a pod `probe` (image `nginx`). Task: create a custom rule named `Read shadow file in container` in `workspace/week-06/shadow-rule.yaml` that alerts at `WARNING` with tags `custom` and `filesystem` whenever a container process opens `/etc/shadow` for reading. Requirements: the output must start with `CUSTOM: shadow file read` and include user, process, command line, file name, container, pod and namespace; the rule must be loaded by every Falco pod without dropping earlier Helm values; reading `/etc/hostname` must not trigger it.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create namespace `rules-lab` and a pod `probe` in it running `nginx`.
 2. Write a custom Falco rule file `workspace/week-06/shadow-rule.yaml` containing one rule named `Read shadow file in container`:

@@ -34,6 +34,11 @@ kind specifics: the control-plane is a Docker container `cks-control-plane`; get
 ## Prerequisites
 Cluster `kind-cks` running. Secrets are currently unencrypted (no `--encryption-provider-config` flag). Check: `docker exec cks-control-plane grep encryption /etc/kubernetes/manifests/kube-apiserver.yaml` prints nothing.
 
+## Exam-style question
+Context: cluster `kind-cks` (control-plane node `cks-control-plane`) stores Secrets unencrypted in etcd. Task: enable encryption at rest for `secrets` using an `aescbc` provider with key name `key1` and a random 32-byte key, with `identity` kept as a fallback, configured at `/etc/kubernetes/enc/enc.yaml`. Requirements: a new Secret must be stored as ciphertext in etcd, the pre-existing Secret `before-enc` in `default` must also end up encrypted, all Secrets must remain readable through the API, and the API server must be running normally at the end. Back up the original kube-apiserver manifest to `/root/kube-apiserver.yaml.bak` before changing it.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Before changing anything, create Secret `before-enc` in namespace `default` with key `data=plainvalue` and read it directly from etcd. Record that the value is readable.
 2. On the control-plane node, create directory `/etc/kubernetes/enc` and an `EncryptionConfiguration` at `/etc/kubernetes/enc/enc.yaml` that:

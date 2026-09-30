@@ -21,6 +21,11 @@ Key commands: `kubectl logs`, `kubectl describe`, `kubectl get events`, `kubectl
 ## Prerequisites
 Day 1 Falco optional (alerts add evidence). Calico enforces NetworkPolicy on `kind-cks`.
 
+## Exam-style question
+Context: Falco reported unexpected shells in the pod of Deployment `web` in namespace `prod`, and the pod's ServiceAccount `web-sa` was used to list Secrets cluster-wide. Task: contain and remediate the incident without disturbing other workloads. Requirements: isolate the compromised pods with a NetworkPolicy named `quarantine-web` before anything else; save pod logs, `describe` output and namespace events to `workspace/week-06/day-04-evidence/`; remove every RBAC grant that gives `web-sa` the excess permission and ensure its token is no longer auto-mounted in future pods; replace the compromised pod with a clean one; write a 3-line incident note mapping events to attack phases in `workspace/week-06/day-04-evidence/notes.txt`.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Setup (given scenario; apply as-is):
 ```yaml

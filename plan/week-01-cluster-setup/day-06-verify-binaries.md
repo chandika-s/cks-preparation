@@ -18,6 +18,11 @@
 ## Prerequisites
 `curl` and a checksum tool (`sha256sum` on Linux, `shasum` on macOS). Optional for the bonus: `docker`, `cosign`. Work in `~/verify-lab/`.
 
+## Exam-style question
+Context: working directory `~/verify-lab/` contains a `kubectl` binary for `v1.35.0` downloaded from `dl.k8s.io` and a modified copy named `kubectl.tampered`. Task: using the published SHA-256 for that release, determine which files are genuine and which have been altered. Requirements: show a per-file `OK` or `TAMPERED` result for every file named `kubectl*`, and do not leave the tampered binary on your PATH.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create `~/verify-lab/`. Download the `kubectl` binary for `v1.35.0` for your OS/architecture from `https://dl.k8s.io/release/v1.35.0/bin/<os>/<arch>/kubectl` and its `kubectl.sha256` file.
 2. Verify the binary against the published hash using a `--check`-style comparison. It must print `OK`.

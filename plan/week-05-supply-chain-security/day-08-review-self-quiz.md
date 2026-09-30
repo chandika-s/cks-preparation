@@ -18,6 +18,11 @@ Fast recall map:
 ## Prerequisites
 Kyverno installed (Day 5). Docker, trivy, syft, cosign, kubesec, kube-linter on the host. Docker registry `registry:2` is not needed unless you do item 4 (start it again). Start each item from a clean directory `workspace/week-05/day-08/` with no notes open; time-box each item.
 
+## Exam-style question
+Context: the `cks` cluster has Kyverno installed, and Docker, Trivy, Syft, cosign, Kubesec and KubeLinter are available on the host. Task: working from a clean `workspace/week-05/day-08/`, and within the time limit given for each item, rebuild `quiz-go:1` as a minimal non-root distroless image under 15 MB, and block images outside `docker.io/library/` and `registry.k8s.io/` in namespace `quiz-reg` with policy `quiz-allowed-registries`. Also enforce cosign `verifyImages` in namespace `quiz-signed`, and fix the insecure Deployment `quiz` into `quiz-fixed.yaml`. Requirements: no reference to earlier solutions, and each policy must be demonstrated with one rejected and one admitted pod.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Complete each item cold (no reference to previous solutions) within its time box:
 

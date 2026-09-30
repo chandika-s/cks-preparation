@@ -20,6 +20,11 @@
 ## Prerequisites
 `SETUP.md` port mappings for 80/443 in place on the kind cluster (`kind-cks.yaml`). Internet access to fetch the manifest and images. `openssl` and `curl` on the host.
 
+## Exam-style question
+Context: cluster `kind-cks` has ports 80/443 mapped to the host, and ingress-nginx is available to install. Task: in namespace `tls-lab`, publish Deployment `web` (image `nginx`, 2 replicas, label `app=web`) behind ClusterIP Service `web` on port 80 over HTTPS at `cks.example.com` through an Ingress named `web-tls` using class `nginx`. Requirements: use a self-signed certificate valid 365 days for `cks.example.com` stored in `~/tls/` and referenced by TLS Secret `cks-tls`. The controller must serve that certificate rather than its default fake one, and plain HTTP must redirect to HTTPS.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Install the kind-specific ingress-nginx manifest (`kubernetes/ingress-nginx`, `main` branch, `deploy/static/provider/kind/deploy.yaml`). Wait until the controller pod in namespace `ingress-nginx` is Ready.
 2. Create namespace `tls-lab`.

@@ -22,6 +22,11 @@ Audit logging records requests to the API server in stages: `RequestReceived`, `
 ## Prerequisites
 Cluster `kind-cks` up. A secret to read (created below). Note: Day 7 needs the audit log configured here.
 
+## Exam-style question
+Context: the kube-apiserver on node `cks-control-plane` has no audit logging, and Secret `db-creds` is used in namespace `default`. Task: enable audit logging with the policy file `/etc/kubernetes/audit/policy.yaml` and log file `/var/log/kubernetes/audit/audit.log`, retaining 7 days, 3 backups and 100 MB per file. Requirements: omit the `RequestReceived` stage, log `secrets` at `RequestResponse` and everything else at `Metadata`; back up the apiserver manifest outside `/etc/kubernetes/manifests/` first; the cluster must be healthy again afterwards; show that a `get` of `db-creds` is logged at `RequestResponse` with a `responseObject`, while a `get pods` event is `Metadata` only.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Open a shell on the control-plane node (`cks-control-plane`).
 2. Create a Secret `db-creds` in namespace `default` with key `password` (any value).

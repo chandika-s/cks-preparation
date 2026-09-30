@@ -26,6 +26,11 @@ kubectl create configmap app-config --from-literal=mode=prod -n payments
 kubectl create secret generic app-secret --from-literal=k=v -n payments
 ```
 
+## Exam-style question
+Context: in namespace `payments`, Deployment `payments-api` runs as the `default` ServiceAccount, which has been granted excessive privileges through a stray binding. Task: remove the excessive privilege, and run `payments-api` under a new dedicated ServiceAccount `payments-sa` that can only get and list configmaps and secrets in `payments`, via Role `payments-reader` and RoleBinding `payments-reader-binding`. Requirements: delete only the offending binding; the `default` ServiceAccount in `payments` must not mount an API token; the Deployment rollout must complete; verify permissions for both ServiceAccounts with `kubectl auth can-i`. Time limit: 20 minutes.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Timed: 20 minutes.
 Namespace `payments` has Deployment `payments-api` running as the `default` ServiceAccount, and `default` has `cluster-admin` bound through a stray RoleBinding. Fix it:

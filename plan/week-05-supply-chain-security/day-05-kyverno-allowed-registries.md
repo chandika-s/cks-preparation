@@ -20,6 +20,11 @@ Restrict which registries pods can pull images from using an admission controlle
 ## Prerequisites
 Cluster `kind-cks` up with Calico, internet access from nodes and host. Admission webhooks add latency; do not install Kyverno while other heavy labs are running.
 
+## Exam-style question
+Context: the `cks` cluster has no policy engine installed, and namespace `registry-test` will hold the workloads to be restricted. Task: install Kyverno and enforce a `ClusterPolicy` named `restrict-image-registries`, saved as `workspace/week-05/day-05/allow-registries.yaml`, so that pods in `registry-test` may only use images from `docker.io/library/`. Requirements: the restriction must cover init and ephemeral containers as well, the rejection message must be `Images must come from docker.io/library/`, and pods in other namespaces must be unaffected. Pod `good` (`docker.io/library/nginx:1.27`) must run, while `bad` (`quay.io/nginx/nginx-unprivileged:latest`) and `bad-init` (permitted main image, init image from `quay.io`) must be rejected.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Install Kyverno on the cluster from the official release install manifest (use `kubectl create`, not `apply`, because the CRDs are too large for client-side apply). Wait until all deployments in namespace `kyverno` are available.
 2. Create namespace `registry-test`.

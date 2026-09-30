@@ -26,6 +26,24 @@ kind caveat: nodes are containers created from a node image; the standard in-pla
 - Port 5001 free on the host (macOS uses 5000 for AirPlay Receiver).
 - Nodes `cks-control-plane`, `cks-worker` up.
 
+## Exam-style question
+_Real exam gives only this; the steps under Task are guided practice._
+
+### Q1 (30%) cosign sign, verify, tamper
+Context: `kubectl config use-context kind-cks`. Run a local registry `mock-registry` (`registry:2`, host port 5001) and push `busybox:1.36` as `localhost:5001/mock/app:v1`. With a cosign key pair in `/tmp/cosign-lab` (empty password), sign the image by digest without a transparency log and save the successful verification JSON to `/tmp/cosign-lab/verify-ok.json`. Then overwrite the tag with `alpine:3.20` and save to `/tmp/cosign-lab/verify-tamper.txt` proof that verifying the tag fails while the original digest still verifies. Also show that a second key pair in `/tmp/cosign-lab/other` cannot verify the original digest.
+
+### Q2 (25%) ResourceQuota and LimitRange
+Context: `kubectl config use-context kind-cks`. In namespace `team-b`, create ResourceQuota `team-b-quota` (4 pods, `requests.cpu` 1, `requests.memory` 1Gi, `limits.cpu` 2, `limits.memory` 2Gi, 1 PVC) and LimitRange `team-b-limits` (container default limit 200m/256Mi, default request 100m/128Mi, max 500m/512Mi, min 50m/64Mi). Pod `p-default` must receive the defaults; Pods `p-big` (limit cpu `1`) and `p-tiny` (request cpu `10m`) must be rejected, with both errors saved to `/tmp/limitrange-errors.txt`. Deployment `filler` (`nginx:1.27`, 5 replicas) must be created, and `/tmp/quota-used.txt` must show how many pods run, why, and the quota Used versus Hard.
+
+### Q3 (20%) Upgrade runbook and drain mechanics
+Context: `kubectl config use-context kind-cks`. Write `/tmp/upgrade-runbook.md` with ordered steps and exact commands to upgrade this cluster (`cks-control-plane`, `cks-worker`) from v1.34.x to v1.35.x with kubeadm on Debian/Ubuntu, covering etcd backup, version skew, package holds and verification, using `1.35.X` placeholders. Take a verified etcd snapshot at `/var/lib/etcd/mock-snapshot.db` on the control plane. In namespace `upg`, run Deployment `web` (`nginx:1.27`, 3 replicas) with PodDisruptionBudget `web-pdb` (`minAvailable: 2`). Save a server-side dry-run drain of `cks-worker` to `/tmp/drain-dryrun.txt`, explain there why a real drain would stall, and leave the node schedulable.
+
+### Q4 (15%) Metadata egress block
+Context: `kubectl config use-context kind-cks`. In namespace `cloud`, create NetworkPolicy `block-metadata` selecting all pods that allows all egress except to `169.254.169.254/32`. Prove enforcement using Pod `metadata-sim` (`nginx:1.27`) in namespace `sim` as a stand-in for the metadata endpoint, and Pod `probe` (`curlimages/curl:8.10.1`) in `cloud`: requests to the stand-in must time out and requests to any other pod IP must succeed.
+
+### Q5 (10%) Verify a binary checksum
+Context: `kubectl config use-context kind-cks`. Download the `kubectl` binary matching the cluster's server version for your `linux` architecture, with its `.sha256` from `dl.k8s.io`, into `/tmp/verify`. Show the checksum verification passing, then failing after the binary is altered, and save both outputs to `/tmp/verify/result.txt`.
+
 ## Task
 Total 90 min / 100 points.
 

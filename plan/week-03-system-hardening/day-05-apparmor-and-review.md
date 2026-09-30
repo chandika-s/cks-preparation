@@ -20,6 +20,11 @@ Kind/macOS caveat: per `SETUP.md`, the Docker Desktop LinuxKit VM has no AppArmo
 ## Prerequisites
 none (check AppArmor availability first: `docker exec -it cks-worker bash -c 'aa-status; cat /sys/module/apparmor/parameters/enabled'`)
 
+## Exam-style question
+Context: cluster `kind-cks`, worker node `cks-worker`, namespace `default`. Task: confine a container with AppArmor. Create and load a profile named `k8s-deny-tmp-write` that allows general file access, capabilities and network but denies writes under `/tmp`, then run pod `aa-test` (image `busybox`, container `main`, `sleep 3600`) on `cks-worker` enforcing it. Requirements: the profile must be loaded on the node that runs the pod; `touch /tmp/x` must fail inside the container while `touch /root/x` succeeds; also provide pod `aa-test-ga` using the current securityContext field instead of the annotation, and record what happens to pod `aa-missing` referencing the unloaded profile `does-not-exist`.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Part A — AppArmor lab on node `cks-worker` (walkthrough only if AppArmor is unavailable):
 

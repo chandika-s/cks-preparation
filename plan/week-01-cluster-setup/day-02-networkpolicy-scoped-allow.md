@@ -20,6 +20,11 @@
 ## Prerequisites
 Day 1 state: namespace `secure-app` with pods `web` (nginx) and `client` (busybox, `sleep 3600`), and NetworkPolicy `default-deny-all` applied. If missing, recreate them first.
 
+## Exam-style question
+Context: namespace `secure-app` contains pods `web` (nginx) and `client` (busybox), and NetworkPolicy `default-deny-all` is already applied. Task: expose `web` as a ClusterIP Service `web` on port 80, then allow only `client` to reach `web` on TCP/80, using policies named `allow-client-to-web`, `allow-client-egress-web` and `allow-dns-egress`. All pods in the namespace must still be able to resolve names through CoreDNS in `kube-system` on port 53 (UDP and TCP). Requirements: do not modify or delete `default-deny-all`, save the manifests under `~/netpol/`, and ensure every other flow (other pods, other ports, other destinations) stays blocked.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Expose pod `web` as a ClusterIP Service `web` on port 80 in `secure-app`.
 2. Determine the labels on `web`, `client`, and the CoreDNS pods, and the label on the `kube-system` namespace that identifies it by name.

@@ -19,6 +19,11 @@
 ## Prerequisites
 None required. This lab uses a fresh namespace so Day 1-2 policies do not apply. Shell access via `docker exec cks-control-plane` and `docker exec cks-worker`.
 
+## Exam-style question
+Context: cluster `kind-cks` has nodes `cks-control-plane` and `cks-worker`. Task: in namespace `meta-lab` with pods `web` (nginx) and `client` (busybox), create NetworkPolicy `block-metadata` so every pod can send egress anywhere except the cloud metadata address `169.254.169.254`, while DNS to CoreDNS in `kube-system` stays allowed and ingress is unaffected. Save it as `~/netpol/block-metadata.yaml`. Also audit the kubelet on `cks-worker` so anonymous requests to port 10250 are rejected (HTTP 401), authorization uses Webhook, and the read-only port is disabled. Requirements: both nodes must be Ready at the end and the kubelet config must be in its secure state.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create namespace `meta-lab` and run pods `web` (image `nginx`) and `client` (image `busybox`, `sleep 3600`) in it.
 2. Create NetworkPolicy `block-metadata` in `meta-lab` applying to all pods: allow all egress to any IPv4 address except `169.254.169.254/32`, and allow DNS (UDP and TCP 53) to the CoreDNS pods in `kube-system` in a separate rule. Ingress must not be affected. Save it as `~/netpol/block-metadata.yaml`.
