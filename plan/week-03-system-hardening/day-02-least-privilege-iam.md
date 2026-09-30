@@ -19,6 +19,11 @@ Least privilege applies at the OS layer as well as through RBAC.
 ## Prerequisites
 none
 
+## Exam-style question
+Context: cluster `kind-cks`, node `cks-control-plane`, and namespace `iam-lab`. Task: apply least privilege to the workstation, node and workloads. The kubeconfig must be readable only by its owner; a new node user `k8sops` must be able to restart kubelet as root and do nothing else with elevated rights; pod `nonroot-fixed` in `iam-lab` must run as UID 1000 with no privilege escalation and no capabilities, while a plain `nginx` pod `root-only` must be refused when non-root is enforced. Requirements: `kubectl --context kind-cks get nodes` must still work, the node must return to `Ready`, and pod `no-token` using ServiceAccount `no-api` must have no API token mounted.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. On your workstation, set `~/.kube/config` to permission `600` and confirm the mode and that `kubectl --context kind-cks get nodes` still works.
 2. On node `cks-control-plane` (`docker exec -it cks-control-plane bash`): create Linux user `k8sops` (home directory, bash shell). Using `visudo`, create `/etc/sudoers.d/k8sops` so that `k8sops` may run exactly `/usr/bin/systemctl restart kubelet` as root without a password and nothing else. If `sudo` is not installed on the node, install it first. Verify as `k8sops` that restarting kubelet works and that `sudo systemctl stop kubelet` and `sudo cat /etc/shadow` are denied.

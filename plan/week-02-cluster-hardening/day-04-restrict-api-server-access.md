@@ -20,6 +20,11 @@
 ## Prerequisites
 None. Have a second terminal ready. Take a backup outside the manifests directory before editing.
 
+## Exam-style question
+Context: you have SSH-equivalent access to control-plane node `cks-control-plane`, where kube-apiserver runs as a static pod. Task: harden the API server so that profiling is disabled, the `NodeRestriction` admission plugin is enabled, and anonymous requests are rejected. Requirements: keep a backup of the original manifest outside `/etc/kubernetes/manifests/`, do not remove any other existing flag, and do not leave extra files in the manifests directory. The cluster must end up healthy with `kubectl get nodes` working; if disabling anonymous auth destabilises the API server, restore a working state while keeping profiling off and NodeRestriction on.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Open a shell in the control-plane node: `docker exec -it cks-control-plane bash`.
 2. Copy `/etc/kubernetes/manifests/kube-apiserver.yaml` to `/root/kube-apiserver.yaml.bak` (not inside the manifests directory).

@@ -28,6 +28,11 @@ Notes:
 ## Prerequisites
 Day 1–2: Falco installed and rules delivered through the Helm release (`customRules`).
 
+## Exam-style question
+Context: Falco runs as release `falco` with the Day 2 rule loaded. Task: (A) in `workspace/week-06/day-03-sources.md`, name the layer, log source and one detection signal for each of five given threat scenarios; (B) in namespace `detect`, pod `beacon` (`busybox:1.36`, `sleep 3600`) must trigger a Falco rule `Unexpected outbound connection from detect namespace` (priority `NOTICE`, rule file `workspace/week-06/outbound-rule.yaml`) only for outbound IPv4 connections to destinations outside `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16` and `127.0.0.0/8`. Requirements: keep the Day 2 rule active; the output must include pod, process, command line, destination IP and port; a connection to `1.1.1.1:80` must alert and one to the `kubernetes` service ClusterIP must not.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Part A — analysis. Write your answers in `workspace/week-06/day-03-sources.md`. For each scenario name the layer(s), the log source(s), and one concrete signal to look for:
 1. A pod makes DNS requests to a suspicious external domain every 60 seconds.

@@ -22,6 +22,24 @@
 - Week 4 Day 3 encryption config must not still be active in the API server manifest (no `--encryption-provider-config`); if it is, remove the flag/mount and restart the API server first, or treat Task 3 as a key rotation and say so in your notes.
 - `jq`, `docker` on the host.
 
+## Exam-style question
+_Real exam gives only this; the steps under Task are guided practice._
+
+### Q1 (20%) NetworkPolicy
+Context: `kubectl config use-context kind-cks`. In namespace `shop`, pods `web`, `api` and `db` currently talk to anyone. Lock the namespace down so that all traffic is denied by default, DNS to `kube-system` is the only general exception, and only the chain `edge` namespace -> `web` (TCP 80) -> `api` (TCP 8080) -> `db` (TCP 5432) is permitted, in both directions as required. Name the policies `default-deny`, `allow-dns`, `web-policy`, `api-policy` and `db-policy`. `db` must have no other egress.
+
+### Q2 (15%) RBAC
+Context: `kubectl config use-context kind-cks`. In namespace `shop`, give ServiceAccount `auditor-sa` and user `jane` read-only visibility of pods and read access to the single ConfigMap `app-config`, using Role `auditor` and RoleBindings `auditor-binding` and `auditor-jane`. They must have no access to Secrets, no write verbs, no other ConfigMaps and nothing outside `shop`.
+
+### Q3 (35%) Secrets encryption at rest
+Context: `kubectl config use-context kind-cks`. The cluster stores Secrets and ConfigMaps unencrypted in etcd. Configure the kube-apiserver on `cks-control-plane` to encrypt `secrets` and `configmaps` with `aescbc` (key name `key1`, fresh 32-byte key, `identity` as fallback) using `/etc/kubernetes/enc/enc.yaml`. All existing Secrets and ConfigMaps, including `shop/db-pass` and `shop/app-config`, must end up stored encrypted, while remaining readable through the API. The control plane must be healthy afterwards.
+
+### Q4 (15%) cluster-admin audit
+Context: `kubectl config use-context kind-cks`. Some subjects hold `cluster-admin` through ClusterRoleBindings. Record every such binding in `/tmp/cluster-admins.txt` as `<bindingName> <Kind>/<subjectName>[,<Kind>/<subjectName>...]`, then remove every binding whose subjects are not system-managed (names starting with `system:` or `kubeadm:`). User `bob` and ServiceAccount `ci:runner` must end with no cluster-wide permissions.
+
+### Q5 (15%) ServiceAccount token hygiene
+Context: `kubectl config use-context kind-cks`. In namespace `shop`, ServiceAccount `auditor-sa` must not automount API tokens. Pod `probe` (`busybox:1.36`, `sleep 3600`) must run as `auditor-sa` with no token mounted. Pod `probe-tok` (same image and command, same ServiceAccount) must receive only a projected token for audience `vault`, valid 600 seconds, at `/var/run/secrets/tokens/vault-token`, mounted read-only.
+
 ## Task
 Set a timer per task. Suggested budget and points are in each heading. Total 90 min / 100 points.
 

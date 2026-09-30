@@ -20,6 +20,11 @@ Falco is a runtime behavioral detection engine. A driver in the node kernel (ker
 ## Prerequisites
 none (Helm 3 and `kind-cks` context available).
 
+## Exam-style question
+Context: cluster `kind-cks` has nodes `cks-control-plane` and `cks-worker`, and no runtime threat detection. Task: deploy Falco as release `falco` in namespace `falco` so it runs on both nodes using the modern eBPF driver, then prove it works by producing the default "Terminal shell in container" alert from a pod named `victim` in namespace `default` (image `nginx`). Requirements: every Falco pod must be ready; record the alert's priority, process name, user, container name and image, and the number of loaded rules. Do not modify the cluster nodes.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Confirm `kubectl config current-context` is `kind-cks`.
 2. Add the Falco Helm repo and install release `falco` from chart `falcosecurity/falco` into a new namespace `falco`, using the modern eBPF driver and `tty=true`.

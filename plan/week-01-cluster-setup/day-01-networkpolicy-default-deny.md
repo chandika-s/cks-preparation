@@ -21,6 +21,11 @@
 ## Prerequisites
 None (cluster `kind-cks` up, Calico running: `kubectl get pods -n calico-system` or `-n kube-system`).
 
+## Exam-style question
+Context: cluster `kind-cks` uses Calico. Task: create namespace `secure-app` with pods `web` (image `nginx`) and `client` (image `busybox`, `sleep 3600`), then isolate every pod in the namespace so that no ingress or egress traffic is permitted in either direction. Requirements: name the NetworkPolicy `default-deny-all`, save the manifest to `~/default-deny-all.yaml` and apply it. Both pods must remain Running, and `client` must no longer reach `web` by pod IP or resolve cluster DNS names.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create namespace `secure-app`.
 2. In `secure-app`, run pod `web` (image `nginx`) and pod `client` (image `busybox`, command `sleep 3600`).

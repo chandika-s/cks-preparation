@@ -20,6 +20,11 @@ Kind caveat: nodes are Docker containers running systemd; they share the kernel 
 ## Prerequisites
 none
 
+## Exam-style question
+Context: node `cks-control-plane` (cluster `kind-cks`) is a general-purpose host that may run services, kernel modules and listeners a Kubernetes node does not need. Task: review the node's running services and listening sockets, disable the attack surface that is not needed, and prevent the `dccp` and `sctp` kernel modules from ever being loaded. Requirements: save your service assessment to `/root/services.txt` and a port-to-process mapping of every listener to `/root/ports.txt` on the node; make the module restriction persistent under `/etc/modprobe.d/`; do not stop containerd, kubelet or anything the cluster depends on, and the cluster must stay healthy.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Work on node `cks-control-plane` (`docker exec -it cks-control-plane bash`). Context `kind-cks`.
 

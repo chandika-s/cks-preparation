@@ -19,6 +19,11 @@
 ## Prerequisites
 Cluster `cks` with nodes `cks-control-plane` and `cks-worker` Ready. Day 4 API server change left healthy.
 
+## Exam-style question
+Context: a two-node kubeadm-style cluster is given with nodes `cks-control-plane` and `cks-worker`, both Ready. Task: determine the available upgrade target for the control plane, validate the upgrade without forcing it, and safely take `cks-worker` out of service and back. Write the exact command sequence for upgrading both nodes to the next minor version to `workspace/week02-upgrade-runbook.md`. Requirements: upgrade control plane before worker, never skip a minor version, and do not break the cluster; at the end no node may be cordoned and all nodes must be Ready.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Record the current version of every node (`kubectl get nodes -o wide`) and the apiserver version (`kubectl version`).
 2. In `cks-control-plane` (`docker exec -it cks-control-plane bash`): run `kubeadm version` and `kubeadm upgrade plan`. Write down which target versions it offers (it may warn that it cannot fetch remote versions on kind).

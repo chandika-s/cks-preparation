@@ -19,6 +19,11 @@
 ## Prerequisites
 Internet access from the cluster and your machine (job manifest and image pull). A shell on the control-plane node: `docker exec -it cks-control-plane bash`.
 
+## Exam-style question
+Context: cluster `kind-cks` has control-plane node `cks-control-plane`, and a kube-bench scan of it reports `[FAIL]` findings. Task: run kube-bench against the control-plane node with the `job-master.yaml` job, save the log to `~/kube-bench-before.txt`, and fix three failing checks: one file-permission finding on the static pod manifests, one kube-apiserver flag finding, and one kube-scheduler or kube-controller-manager flag finding. Requirements: re-run the scan and save the log to `~/kube-bench-after.txt` showing the three fixed checks as `[PASS]`. Do not break the cluster: all control-plane pods in `kube-system` must be Running and `kubectl get nodes` must work, and leave no backup files in `/etc/kubernetes/manifests/`.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Apply the kube-bench control-plane job (`job-master.yaml` from the `aquasecurity/kube-bench` repo, `main` branch) to the `default` namespace. Ensure the pod is scheduled on the control-plane node, wait for the job to complete, and save its log to `~/kube-bench-before.txt`.
 2. From the log, list the `[FAIL]` results in sections 1.1 (file permissions), 1.2 (API server) and 1.3/1.4 (controller-manager/scheduler). If the job errors on benchmark auto-detection for this Kubernetes version, pass an appropriate `--benchmark` argument in the job spec.

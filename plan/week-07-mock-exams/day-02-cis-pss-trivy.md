@@ -19,6 +19,24 @@
 - Cluster `kind-cks`; kube-bench available as configured in Week 1 Day 3 (binary in the node, or Job manifest); Trivy installed on the host and able to reach its vulnerability DB (internet).
 - Nodes `cks-control-plane` and `cks-worker` reachable via `docker exec`.
 
+## Exam-style question
+_Real exam gives only this; the steps under Task are guided practice._
+
+### Q1 (25%) CIS remediation
+Context: `kubectl config use-context kind-cks`. kube-bench reports failures on this cluster. Remediate: controller-manager and scheduler `--profiling` set to false; scheduler manifest permissions 600 or stricter and owned by `root:root`; on both nodes, kubelet anonymous auth disabled, authorization mode `Webhook` and read-only port 0 set explicitly in `/var/lib/kubelet/config.yaml`. Re-run kube-bench to show these checks now PASS. Control plane pods and both nodes must stay Ready.
+
+### Q2 (20%) Pod Security restricted
+Context: `kubectl config use-context kind-cks`. Create namespace `payments` enforcing, auditing and warning on the `restricted` Pod Security Standard (pinned to `latest`). Deployment `ledger-api` (manifest provided with the task) runs 0/2 pods there. Make both replicas run, using `nginxinc/nginx-unprivileged:1.27` on port 8080 if needed, without changing the namespace labels. Also run Pod `batch-job` (`busybox:1.36`, `sleep 3600`) in `payments` as UID/GID 10001 so that it is admitted.
+
+### Q3 (25%) Trivy scan and fix
+Context: `kubectl config use-context kind-cks`. Namespace `scan` runs Deployments `old-nginx`, `old-alpine` and `tiny`. Write one line per image to `/tmp/trivy-report.txt` as `<image> CRITICAL=<n> HIGH=<n>`. Delete every Deployment whose image has a CRITICAL vulnerability, then bring `old-nginx` back on an `nginx` tag with zero CRITICAL findings and running. Save the full Trivy table for that final image to `/tmp/trivy-final.txt`.
+
+### Q4 (15%) PSA baseline with warnings
+Context: `kubectl config use-context kind-cks`. Create namespace `legacy` that enforces `baseline` and warns and audits on `restricted`. Save to `/tmp/psa-warnings.txt` the warnings a plain `nginx:1.27` Pod named `probe` would trigger, without creating it, and to `/tmp/psa-reject.txt` the error proving that a Pod `spy` with `hostPID: true` is rejected.
+
+### Q5 (15%) Dockerfile hardening
+Context: `kubectl config use-context kind-cks`. The Dockerfile at `/tmp/mock2/Dockerfile` (content given with the task) is insecure. Rewrite it in place to use the pinned minimal base `python:3.12-slim`, install no extra tools, use `COPY` rather than `ADD`, work in `/app` and run as numeric non-root user `10001`.
+
 ## Task
 Total 90 min / 100 points. Work in the order given or rotate; time each task.
 

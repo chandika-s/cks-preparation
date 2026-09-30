@@ -21,6 +21,24 @@
 - API server audit logging enabled per Week 6 Day 6 (policy logs `secrets` at `RequestResponse`, everything else at least `Metadata`; log at `/var/log/kubernetes/audit/audit.log` on `cks-control-plane`; adjust paths below if yours differs). If not enabled, do that first and count it against your time.
 - `jq` on host.
 
+## Exam-style question
+_Real exam gives only this; the steps under Task are guided practice._
+
+### Q1 (25%) Custom Falco rule
+Context: `kubectl config use-context kind-cks`. Add a Falco rule `Network Tool Run In Web Prod`, priority `WARNING`, tag `mock`, that fires when `wget` or `curl` is spawned in any container in namespace `web-prod`. Output must be exactly `NET_TOOL_IN_POD ns=<namespace> pod=<pod> user=<user> cmd=<full command line> image=<image repo>`. The rule must survive Falco restarts. Trigger it from `web-prod/intruder` and save the matching Falco log line to `/tmp/falco-hit.txt`.
+
+### Q2 (25%) Audit log queries
+Context: `kubectl config use-context kind-cks`. Using only `jq` on a copy of the API server audit log at `/tmp/audit.log`, write: `/tmp/audit-q1.txt` one compact JSON object (`user`, `ns`, `name`, `time`) per Secret deletion; `/tmp/audit-q2.txt` every HTTP 403 response with `user`, impersonated user (or null), `verb`, `uri`, `code`; `/tmp/audit-q3.txt` every pod `exec` with `user`, `ns`, `pod`; `/tmp/audit-q4.txt` event counts per `verb`, sorted descending; and in `/tmp/audit-q5.txt` one sentence saying which query shows who caused the 403 and why `user` differs from the impersonated user.
+
+### Q3 (20%) Hardened pod
+Context: `kubectl config use-context kind-cks`. In namespace `locked`, create Pod `vault-ui` from `nginxinc/nginx-unprivileged:1.27` on port 8080 that reaches Ready with a read-only root filesystem, no privilege escalation, all capabilities dropped, UID/GID 101, seccomp `RuntimeDefault` and no ServiceAccount token. Only an `emptyDir` at `/tmp` may be writable. Demonstrate that writing to `/usr/share/nginx/html/x` fails and to `/tmp/x` succeeds.
+
+### Q4 (15%) Mutable workload audit
+Context: `kubectl config use-context kind-cks`. Write to `/tmp/mutable-pods.txt` the `ns/name` of every pod outside `kube-system` with a container whose `readOnlyRootFilesystem` is not `true`, and to `/tmp/privileged-pods.txt` the `ns/name` of every pod in the cluster with a privileged container, init containers included. Replace `locked/legacy-app` with a non-privileged, non-root pod of the same name using `nginxinc/nginx-unprivileged:1.27`.
+
+### Q5 (15%) Incident response
+Context: `kubectl config use-context kind-cks`. Falco reports a shell in `web-prod/intruder`. Contain it without deleting it: remove it from Service `web-svc` endpoints and block all its ingress and egress with NetworkPolicy `quarantine` selecting `quarantine=true`. Preserve evidence in `/tmp/evidence/intruder.yaml`, `/tmp/evidence/intruder.log` and `/tmp/evidence/falco.txt` (the pod's Falco lines). Then delete the pod.
+
 ## Task
 Total 90 min / 100 points.
 

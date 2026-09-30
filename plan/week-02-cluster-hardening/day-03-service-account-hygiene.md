@@ -17,6 +17,11 @@
 ## Prerequisites
 None.
 
+## Exam-style question
+Context: namespace `sa-lab` is to be used for two workloads, `no-api` and `needs-api` (busybox:1.36, `sleep 3600`), where only `needs-api` calls the Kubernetes API. Task: configure the namespace so that `no-api` runs as the `default` ServiceAccount with no API token mounted, and `needs-api` runs as dedicated ServiceAccount `app-sa` with a token mounted. Requirements: do not set the token option on the `no-api` pod spec itself; a pod `override-pod` using `app-sa` must have no token mounted; show from inside the pods that `/var/run/secrets/kubernetes.io/serviceaccount` exists only where intended.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create namespace `sa-lab`.
 2. Set `automountServiceAccountToken: false` on the `default` ServiceAccount in `sa-lab`.

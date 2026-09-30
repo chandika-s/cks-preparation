@@ -21,6 +21,11 @@ Kind notes: seccomp works on kind. Node names/containers are `cks-control-plane`
 ## Prerequisites
 none
 
+## Exam-style question
+Context: cluster `kind-cks`, namespace `seccomp-lab`, worker node `cks-worker`. Task: apply seccomp to pods as follows. Pod `default-seccomp` must use the runtime default profile; pod `custom-seccomp` (image `busybox`) on `cks-worker` must use a custom node-local profile `profiles/deny-mkdir.json` that allows everything except `unshare`, `mkdir` and `mkdirat`, which must return EPERM; pod `unconfined` must run with no filtering. Requirements: all pods except the one intentionally broken must be `Running` with `sleep 3600`; show that `mkdir /tmp/x` fails in `custom-seccomp` but succeeds in `default-seccomp`; pod `bad-profile` referencing the missing `profiles/missing.json` on `cks-worker` must be created and its failure reason recorded.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Namespace `seccomp-lab` (create it). All pods use image `nginx` unless stated; command `sleep 3600`. Use `busybox` pods where an image with `mkdir` is enough.
 

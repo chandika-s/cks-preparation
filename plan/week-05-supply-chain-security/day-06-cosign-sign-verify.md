@@ -24,6 +24,11 @@ Sign images at build/push time (`cosign sign`) and verify the signature at admis
 - Day 1: local images `hello-go:slim` (or any image you built).
 - `docker`, `cosign` on the host.
 
+## Exam-style question
+Context: Kyverno is installed, `hello-go:slim` exists locally, and a plain-HTTP registry is available as `registry:5000` inside the cluster and `localhost:5000` on the host. Task: push `hello-go:slim` to the registry as `app:v1`, sign it with a cosign key pair created in `workspace/week-05/day-06/`, and enforce a `ClusterPolicy` named `require-signed-images` (saved as `verify-images.yaml` in that directory) so that pods in namespace `signed` can only use signed `registry:5000/*` images. Requirements: `app:unsigned` (a pushed `busybox:1.36`) must never be signed, pod `unsigned` using it must be rejected, and pod `signed-ok` using `registry:5000/app:v1` must be admitted with its image resolved to a digest.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Start a local registry: container `registry` (image `registry:2`), published on host `127.0.0.1:5000`, restart policy always, and connected to the `kind` docker network.
 2. In `workspace/week-05/day-06/`, generate a cosign key pair (empty password is fine for the lab).

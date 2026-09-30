@@ -19,6 +19,11 @@ A Software Bill of Materials (SBOM) lists every component and dependency in an i
 ## Prerequisites
 `syft` and `trivy` installed. Images `hello-go:fat` and `hello-go:slim` from Day 1 (or any image you built this week).
 
+## Exam-style question
+Context: local images `hello-go:fat` and `hello-go:slim` exist on the host, which has Syft, Trivy and `jq` installed. Task: generate a CycloneDX JSON SBOM for `hello-go:fat` at `workspace/week-05/day-03/sbom.json`, and use it to determine the version of one installed library package and whether Trivy reports any CVE for it. Requirements: write the package, version and any CVE IDs to `workspace/week-05/day-03/crossref.txt`, and the Trivy result must come from scanning the SBOM file, not the image.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Generate a table SBOM for `hello-go:fat` and for `hello-go:slim` from the local docker daemon. Count the packages in each.
 2. Generate a CycloneDX JSON SBOM for `hello-go:fat` into `workspace/week-05/day-03/sbom.json`.

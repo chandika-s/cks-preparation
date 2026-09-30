@@ -22,6 +22,11 @@ Kind caveats: kind nodes are Docker containers on the Docker `kind` network. `ku
 ## Prerequisites
 none (do not leave Day 1 module blacklists relevant here)
 
+## Exam-style question
+Context: control-plane node `cks-control-plane` (cluster `kind-cks`) exposes several ports, and the kube-apiserver secure port 6443 is reachable from any source. Task: restrict host-level access to TCP 6443 so it is reachable only from loopback, the Docker `kind` network and the Calico pod CIDR, and verify etcd and the kubelet do not expose unintended endpoints. Requirements: record whether each control-plane port (6443, 2379, 2380, 2381, 10250, 10257, 10259) is loopback-only or externally bound in `/root/binding.txt`; the kubelet read-only port must be disabled and anonymous auth off; do not break the cluster, so `kubectl get nodes` and `kubectl get pods -A` must still work afterwards.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 On `cks-control-plane` (`docker exec -it cks-control-plane bash`):
 

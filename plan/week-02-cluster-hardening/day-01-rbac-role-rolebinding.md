@@ -19,6 +19,11 @@
 ## Prerequisites
 None (kind-cks running, `kubectl config current-context` is `kind-cks`).
 
+## Exam-style question
+Context: the kind-cks cluster is available and namespace `rbac-lab` does not exist yet. Task: create namespace `rbac-lab` and give ServiceAccount `pod-reader-sa` read-only access to pods in that namespace only, using a Role named `pod-reader` and a RoleBinding named `pod-reader-binding`. Requirements: grant nothing beyond get, list and watch on pods; the ServiceAccount must have no access to pods in other namespaces, to secrets, or to delete pods. Prove the result with `kubectl auth can-i` impersonation.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create namespace `rbac-lab` and a ServiceAccount `pod-reader-sa` in it.
 2. Create a Role `pod-reader` in `rbac-lab` that allows only `get`, `list`, `watch` on `pods` (core API group, no subresources).

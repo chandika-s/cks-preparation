@@ -26,6 +26,11 @@ Scan images for known CVEs before deployment; fail CI/CD (or admission) if HIGH/
 ## Prerequisites
 Trivy installed on the host and internet access for the DB. Optional: `hello-go:fat` / `hello-go:slim` from Day 1.
 
+## Exam-style question
+Context: namespace `scan-lab` does not exist yet and Trivy is installed on the host. Task: create pods `old` (`nginx:1.18`), `new` (`nginx:stable-alpine`) and `bb` (`busybox:1.36`) in `scan-lab`, each with a single container, then delete every pod whose image has at least one CRITICAL vulnerability. Requirements: leave the pods whose images have no CRITICAL findings running, and write the names of the deleted pods, one per line, to `workspace/week-05/day-02/deleted.txt`.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Run `trivy image --severity HIGH,CRITICAL nginx:1.18` and identify the OS/base reported at the top and the count of HIGH and CRITICAL findings.
 2. Choose one CRITICAL or HIGH CVE from that report that has a fixed version. In `workspace/week-05/day-02/findings.txt` record: CVE ID, affected package, installed version, fixed version, and a written remediation (which image change or package upgrade resolves it and why).

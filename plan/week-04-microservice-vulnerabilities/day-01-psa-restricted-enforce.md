@@ -30,6 +30,11 @@ Key points:
 ## Prerequisites
 None.
 
+## Exam-style question
+Context: cluster `kind-cks` is given; namespace `psa-lab` does not exist yet. Task: create `psa-lab` so that Pod Security Admission enforces the `restricted` level, and show that a pod `root-pod` (image `busybox:1.36`, `sleep 3600`) with no securityContext is rejected. Then provide a compliant pod `ok-pod` from the manifest `~/psa-lab/ok-pod.yaml` that is admitted and Running. Requirements: `warn` and `audit` must also be set to `restricted` on the namespace, and do not exempt the namespace or weaken the policy to make the pod pass.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Set context `kind-cks`. Create namespace `psa-lab`.
 2. Label `psa-lab` so that the `restricted` level is enforced (latest version).

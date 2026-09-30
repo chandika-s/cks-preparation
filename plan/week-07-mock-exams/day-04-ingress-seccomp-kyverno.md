@@ -23,6 +23,24 @@
 - Kyverno installed (Week 5 Day 5) and Ready in namespace `kyverno`.
 - `openssl`, `curl`, `jq` on the host.
 
+## Exam-style question
+_Real exam gives only this; the steps under Task are guided practice._
+
+### Q1 (25%) TLS Ingress
+Context: `kubectl config use-context kind-cks`. In namespace `store`, expose Deployment `catalog` (`nginx:1.27`, 2 replicas) through ClusterIP Service `catalog-svc` (port 80) and Ingress `catalog-ing` (class `nginx`, host `catalog.mock.local`, path `/`). Serve it over TLS with a self-signed certificate (30 days, CN and SAN `catalog.mock.local`) stored as Secret `catalog-tls`, and redirect HTTP to HTTPS. Without editing `/etc/hosts`, save to `/tmp/ingress-proof.txt` evidence of an HTTPS 200, the served certificate subject, and the HTTP 308 redirect.
+
+### Q2 (25%) Custom seccomp profile
+Context: `kubectl config use-context kind-cks`. Create a seccomp profile `/tmp/block-mkdir.json` that allows everything except `mkdir` and `mkdirat`, which must fail with `EPERM`, and install it on node `cks-worker` as `profiles/block-mkdir.json`. In namespace `sandbox`, run Pod `no-mkdir` with that profile and Pod `with-mkdir` with `RuntimeDefault`, both `busybox:1.36` running `sleep 3600` on `cks-worker`. Show `mkdir /tmp/x` fails with "Operation not permitted" in the first and succeeds in the second.
+
+### Q3 (5%) AppArmor
+Context: `kubectl config use-context kind-cks`. Write `/tmp/apparmor-notes.md` containing the Pod `securityContext` snippet that applies a node-loaded AppArmor profile `k8s-deny-write` to a container, the node-side commands to load and verify the profile, and one sentence on why this cannot be run on this cluster.
+
+### Q4 (25%) Kyverno registry restriction
+Context: `kubectl config use-context kind-cks`. Create namespaces `secure` (label `registry-policy=enforced`) and `open`. Create ClusterPolicy `restrict-registries` in `Enforce` mode, applying only to Pods in namespaces labelled `registry-policy=enforced`, with rules `allowed-registries` (all container and init container images must start with `registry.k8s.io/` or `ghcr.io/mock-org/`), `require-tag` and `no-latest`. Show that in `secure`, `nginx:1.27` and `registry.k8s.io/pause:latest` are denied and `registry.k8s.io/pause:3.9` is admitted, while `nginx:1.27` is admitted in `open`. Save the three `secure` outputs to `/tmp/kyverno-proof.txt`.
+
+### Q5 (20%) API server exposure check
+Context: `kubectl config use-context kind-cks`. Record in `/tmp/apiserver-check.txt` the `--authorization-mode`, `--enable-admission-plugins` and `--anonymous-auth` settings of the kube-apiserver (noting the default if unset), and the HTTP status codes returned without credentials for `/version` and `/api`. Write to `/tmp/anon-bindings.txt` every ClusterRoleBinding with `system:anonymous` or `system:unauthenticated` as a subject. In the first file, explain why setting `--anonymous-auth=false` on a kubeadm/kind control plane is risky without other changes.
+
 ## Task
 Total 90 min / 100 points.
 

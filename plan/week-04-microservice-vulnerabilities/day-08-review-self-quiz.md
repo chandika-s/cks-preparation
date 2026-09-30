@@ -19,6 +19,11 @@ Week 4 recap, the commands and fields to have memorised:
 - If Day 3 encryption is still enabled, revert it first using the Cleanup section of the Day 3 answer, so item 2 starts from a plain cluster. (Do this before starting the clock.)
 - Do not open earlier answer files while attempting.
 
+## Exam-style question
+Context: cluster `kind-cks`, control-plane node `cks-control-plane`. Task: (1) namespace `quiz-psa` must enforce the `restricted` Pod Security level and run a compliant pod `good` (`busybox:1.36`, `sleep 3600`), with a non-compliant pod `bad` shown rejected; (2) enable Secrets encryption at rest with `aescbc` key `qkey1` and an `identity` fallback, config at `/etc/kubernetes/enc/enc.yaml`, and prove Secret `quiz-secret` is stored encrypted in etcd; (3) namespace `quiz-tenant` must be limited to 2 pods, 500m/512Mi requests and 1 CPU/1Gi limits, with LimitRange defaults and maximums, so a third pod is rejected; (4) create RuntimeClass `kata` (handler `kata`) and pod `sandboxed` (`nginx:1.27`) in `default` using it; (5) state the trade-offs between CNI-level and mesh mTLS Pod-to-Pod encryption. Requirements: the cluster must stay healthy; use the exact names above.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Attempt each item from memory, timed. Use only `kubectl explain`, `--help` and the cheatsheet allowed in the exam (kubernetes.io docs are permitted in the real exam; here try without first, then check the docs).
 

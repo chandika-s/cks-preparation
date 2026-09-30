@@ -35,6 +35,11 @@ kind/macOS: kind nodes are Docker containers using the host's (LinuxKit VM) kern
 ## Prerequisites
 None.
 
+## Exam-style question
+Context: cluster `kind-cks` has no gVisor runtime installed on its nodes. Task: create the cluster-scoped RuntimeClass `gvisor` (handler `runsc`) and a pod `untrusted` (image `nginx:1.27`) in namespace `sandbox` that uses it. Also create RuntimeClass `gvisor-scheduled` (handler `runsc`) that restricts scheduling to nodes labelled `sandbox=gvisor` and adds a pod overhead of 100m CPU and 64Mi memory. Requirements: do not label or modify any nodes, do not alter the container runtime configuration, and both RuntimeClasses must exist at the end.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create a cluster-scoped `RuntimeClass` named `gvisor` that maps to handler `runsc`.
 2. Create namespace `sandbox`. Create a pod `untrusted` in it (image `nginx:1.27`) that uses `runtimeClassName: gvisor`. (Namespace has no PSA enforcement.)

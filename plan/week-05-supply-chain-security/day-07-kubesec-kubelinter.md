@@ -17,6 +17,11 @@ These tools lint Kubernetes manifests for security misconfigurations (missing `s
 ## Prerequisites
 `kubesec` (binary or docker image) and `kube-linter` installed on the host. Cluster access for step 5.
 
+## Exam-style question
+Context: `workspace/week-05/day-07/deployment.yaml` defines Deployment `insecure-web` in `default` that uses host networking, a privileged container and a mounted docker.sock. Task: scan it with Kubesec and KubeLinter, record the findings in `workspace/week-05/day-07/findings.txt`, and produce a hardened replacement `deployment-fixed.yaml` for a Deployment named `web` (3 replicas, image `nginxinc/nginx-unprivileged:1.27`, ServiceAccount `web-sa`). Requirements: `kube-linter lint` must exit 0, Kubesec must report no `critical` items, and the fixed manifest must be applied so all pods are Running.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 1. Create `workspace/week-05/day-07/deployment.yaml` containing this deliberately insecure Deployment:
    ```yaml

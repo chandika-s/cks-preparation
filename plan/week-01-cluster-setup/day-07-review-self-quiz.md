@@ -17,6 +17,11 @@ Review, no new material. Key facts to have ready:
 ## Prerequisites
 Ingress-nginx installed (Day 4). Use fresh namespaces `quiz1` to `quiz5` so earlier state does not help or interfere. Timer (phone/stopwatch). No notes, but `kubectl explain` and the Kubernetes docs (kubernetes.io/docs) are allowed, as on the exam.
 
+## Exam-style question
+Context: cluster `kind-cks` with ingress-nginx installed, and fresh namespaces `quiz1`, `quiz2`, `quiz4` and `quiz5`. Task: without notes (only `kubectl explain` and kubernetes.io/docs), complete these Week 1 items at exam pace, at most 10 minutes each. In `quiz1`, apply default-deny policy `default-deny-all`. In `quiz2`, allow only `client` to reach `web` on TCP/80 with DNS working. In `quiz4`, publish Deployment `app` over TLS at `quiz.example.com` with Secret `quiz-tls` and Ingress `app-tls`. In `quiz5`, apply `block-imds`, which blocks egress to `169.254.169.254/32` only. Requirements: prove each allowed and denied flow, and state how you would remediate kube-bench finding 1.2.1 and which two kubelet settings protect port 10250.
+
+_Real exam gives only this; the steps under Task are guided practice._
+
 ## Task
 Time each item; limit 10 minutes. Record the time and whether you used notes.
 1. In new namespace `quiz1`, with pods `a` and `b` (nginx) running, write and apply a NetworkPolicy `default-deny-all` denying all ingress and egress for every pod. Prove it with a failed request.
